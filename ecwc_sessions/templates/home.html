@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if request.user_agent.is_pc %}
+  <div id="container_home">
+    <img src="{% static 'banner.jpg' %}" style="width:100%; padding-bottom:10px; margin-left:auto; margin-right:auto; display:block;" />
+    <div id="container_inside">
+      <h2 style="text-align:center;">Welcome to the Early Childhood Winter Conference Registration Tool</h2>
+      <p>The purpose of this tool is to help you plan your session attendance before you arrive at the conference. The steps to using this tool are simple:</p>
+      <ol>
+        <li>Click on one of the <b>links at the top of the page</b> to view all of the sessions available for a given timeslot.</li>
+        <li>To view the details for a given session, just click on the title of the session.</li>
+        <li>If you like the session description, press the "Register" button to add the session to your schedule.</li>
+      </ol>
+      <p>You can replace an item on your schedule at any time by simply choosing a new session for that timeslot. Please note that while you can certainly attend sessions without using this application, registering for sessions using this tool will guarantee you a seat for the session and provide an opporunity for you to receive future correspondence about the session topic.</p>
+      <p>If you experience any issues related to the use of this tool, please contact the <a href="mailto:dmcgeary@hcde-texas.org?subject="Issue with Registration Tool">administrator</a>.</p>
+    </div>
+  </div>
+{% else %}
+  <div id="container_home">
+    <img src="{% static 'banner.jpg' %}" style="width:100%; padding-bottom:10px; margin-left:auto; margin-right:auto; display:block;" />
+    <div id="container_inside" style="font-size: 28px;">
+      <h2 style="text-align:center;">Welcome to the Early Childhood Winter Conference Registration Tool</h2>
+      <p>The purpose of this tool is to help you plan your session attendance before you arrive at the conference. The steps to using this tool are simple:</p>
+      <ol>
+        <li>Click on one of the <b>links at the top of the page</b> to view all of the sessions available for a given timeslot.</li>
+        <li>To view the details for a given session, just click on the title of the session.</li>
+        <li>If you like the session description, press the "Register" button to add the session to your schedule.</li>
+      </ol>
+      <p>You can replace an item on your schedule at any time by simply choosing a new session for that timeslot. Please note that while you can certainly attend sessions without using this application, registering for sessions using this tool will guarantee you a seat for the session and provide an opporunity for you to receive future correspondence about the session topic.</p>
+      <p>If you experience any issues related to the use of this tool, please contact the <a href="mailto:dmcgeary@hcde-texas.org?subject="Issue with Registration Tool">administrator</a>.</p>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

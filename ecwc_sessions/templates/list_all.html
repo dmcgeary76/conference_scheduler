@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block content %}
+{% if request.user_agent.is_pc %}
+  <div class="clearfix">
+    <div class="box">
+      <table>
+        <tbody>
+          <tr>
+            <th>Title<br />&nbsp;</th>
+            <th>Time<br />&nbsp;</th>
+            <th>Room Capacity<br />&nbsp;</th>
+          </tr>
+          {% for sesh in all_sesh %}
+          <tr>
+            <td><a href="{% url 'details_view' sesh.id %}">{{ sesh.title }}</a></td>
+            <td style="float:left; padding-right:20px;">{{ sesh.time_slot }}</td>
+            <td><span style="color:red;">{{ sesh.room_limit|sub:sesh.seats }}</span> seats remaining</td>
+          </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="box">
+      {% include 'my_schedule.html' %}
+    </div>
+  </div>
+{% else %}
+  <p class="mobile_container">
+    {% include 'my_schedule.html' %}
+  </p>
+  <p class="mobile_container">
+    <br /><br />
+    <table style="padding-top:20px;">
+      <tbody>
+        <tr style="font-size:28px;">
+          <th>Title<br />&nbsp;</th>
+          <th>Time<br />&nbsp;</th>
+          <th>Room Capacity<br />&nbsp;</th>
+        </tr>
+        {% for sesh in all_sesh %}
+        <tr style="font-size: 28px;">
+          <td><a href="{% url 'details_view' sesh.id %}">{{ sesh.title }}</a></td>
+          <td style="float:left; padding-right:20px;">{{ sesh.time_slot }}</td>
+          <td><span style="color:red;">{{ sesh.room_limit|sub:sesh.seats }}</span> seats remaining</td>
+        </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+  </p>
+{% endif %}
+{% endblock %}

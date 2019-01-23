@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}ECWC Planner Login{% endblock %}
+{% block content %}
+<div id="container">
+  <div id="core_login">
+    <img class="logo" src="{% static 'logo.png' %}" />
+    <form method="post">{% csrf_token %}
+      <div><b>Email Address:</b> {{ form.username }}</div>
+      <input type="hidden" name="password" value="ecwc2019!"</input>
+      <div style="clear:both;">&nbsp;</div>
+      <input type="submit" value="login"></input>
+    </form>
+  </div>
+  <span style="decoration:none; color:red; text-align:center;">{{ form.non_field_errors }}</span>
+  <img class="hcde_logo" src="{% static 'hcde_logo.png' %}" />
+</div>
+{% endblock %}
