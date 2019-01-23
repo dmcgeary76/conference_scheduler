@@ -51,7 +51,7 @@ def submit_session(item, time_slot):
         submission = Session_Model(
             presenter   = item[0],
             org         = item[1],
-            email       = item[2],
+            email       = item[2].lower(),
             title       = item[4],
             description = item[5],
             domain      = item[6],
