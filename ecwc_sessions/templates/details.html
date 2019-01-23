@@ -15,7 +15,7 @@
           <td>Time: {{ sesh.time_slot }}</td>
           <td style="color:red;">Seats Remaining: {{ sesh.room_limit|sub:sesh.seats }}</td>
         <tr>
-          <td colspan="3">{{ sesh.description|linebreaks }}</td>
+          <td colspan="3">{{ sesh.description|escape }}</td>
         </tr>
         <tr>
           <td colspan="3">
