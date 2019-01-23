@@ -6,7 +6,7 @@ class Session_Model(models.Model):
     org             = models.CharField(max_length=120)
     email           = models.CharField(max_length=120)
     title           = models.CharField(max_length=120)
-    description     = models.CharField(max_length=1500)
+    description     = models.CharField(max_length=500)
     domain          = models.CharField(max_length=120)
     age_range       = models.CharField(max_length=120)
     code            = models.CharField(max_length=120)
