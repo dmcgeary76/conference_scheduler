@@ -76,15 +76,23 @@ def enroll_them():
     for item in dataReader:
         try:
             user = get_object_or_404(User, username=item[2].lower())
+            print(item[2] + ' already exists.') 
+            pass
         except:
-            user = User(
-                last_name   = item[0],
-                first_name  = item[1],
-                username    = item[2].lower(),
-                email       = item[2].lower(),
-            )
-            user.set_password('ecwc2019!')
-            user.save()
-            email_it(item[2])
-            print('%s %s has been enrolled and notified.' % (item[1], item[2]))
-            sleep(5)
+            try:
+                user = User(
+                    last_name   = item[0],
+                    first_name  = item[1],
+                    username    = item[2].lower(),
+                    email       = item[2].lower(),
+                )
+                user.set_password('ecwc2019!')
+                user.save()
+                send_it(item[2])
+                try:
+                    print('%s %s has been enrolled and notified.' % (item[1], item[2]))
+                except:
+                    print('Email sent to ' + item[2])
+                sleep(5)
+            except:
+                print('User create failed.')
