@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if user.is_staff %}
+  <form action='.' method='POST'>{% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' value='Save' />
+  </form>
+{% else %}
+  <p>OOOoooOOO!  You found the secret create_session page!  Nothing else to see here, though.</p>
+{% endif %}
 
-<form action='.' method='POST'>{% csrf_token %}
-  {{ form.as_p }}
-  <input type='submit' value='Save' />
-</form>
 {% endblock %}
