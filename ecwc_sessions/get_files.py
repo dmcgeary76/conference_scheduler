@@ -28,7 +28,6 @@ def get_data(url):
                 submit_session(item, item[10])
 
 
-
 def submit_session(item, time_slot):
     if item[6] == 'SCIENCE ROUND TABLE':
         item[10] = time_slot

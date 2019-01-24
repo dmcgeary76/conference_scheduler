@@ -111,3 +111,16 @@ def details_view(request, pk=0):
 @login_required
 def home_view(request):
     return render(request, "home.html", {})
+
+
+@login_required
+def create_session_view(request):
+    form = Session_Form(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('list_all_view'))
+    else:
+        context = {
+            'form': form
+        }
+    return render(request, 'create_session.html', context)
