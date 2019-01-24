@@ -14,6 +14,7 @@ class Session_Form(forms.ModelForm):
     room            = forms.CharField(max_length=120)
     time_slot       = forms.CharField(max_length=120)
     room_limit      = forms.IntegerField()
+    seats           = forms.IntegerField()
     class Meta:
         model = Session_Model
         fields = [
@@ -27,7 +28,8 @@ class Session_Form(forms.ModelForm):
             'code',
             'room',
             'time_slot',
-            'room_limit'
+            'room_limit',
+            'seats'
         ]
 
 
