@@ -77,8 +77,7 @@ def enroll_them():
         try:
             user = get_object_or_404(User, username=item[2].lower())
             print(item[2] + ' already exists.') 
-            pass
-        except
+        except:
             user = User(
                 last_name   = item[0],
                 first_name  = item[1],
