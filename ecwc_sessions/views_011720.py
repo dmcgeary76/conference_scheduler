@@ -20,19 +20,15 @@ def list_all_view(request, ts=0):
         '1245': {'title': '', 'room': '', 'session_id': 0},
         '200':  {'title': '', 'room': '', 'session_id': 0}
     }
-    times = ['10:15 A.M.', '11:30 A.M.', '12:45 P.M.', '2:00 P.M.']
+    times = ['10:15 A.M.', '11:30 A.M.', '12:45 P.M.', '2:00 P.M']
     if ts == 0:
-        if request.session['last_view']:
-            pass
-        else:
-            request.session['last_view'] = '0:00'
         try:
             all_sesh = Session_Model.objects.all().filter(time_slot=request.session['last_view']).order_by('title')
         except:
             all_sesh = Session_Model.objects.all().order_by('title')
     elif ts=='0:00':
         all_sesh = Session_Model.objects.all().order_by('title')
-        request.session['last_view'] = '0:00'
+        request.session['last_view'] = 0
     else:
         all_sesh = Session_Model.objects.all().filter(time_slot=ts).order_by('title')
         request.session['last_view'] = ts
@@ -55,19 +51,10 @@ def list_all_view(request, ts=0):
 
 @login_required
 def delete_choice_view(request, pk):
-    try:
-        seshs = Choice_Model.objects.filter(session_id=pk, user_id=request.user.id)
-        seshs.delete()
-    except:
-        print('Something went wrong.')
-    '''
-    sesh = get_object_or_404(Session_Model, id=pk)
-    choi = get_object_or_404(Choice_Model, session_id=pk, user_id = request.user.id, time_slot = sesh.time_slot)
-    choi.delete()
-    if sesh.duration == '2 Hours':
-        choi2 = get_object_or_404(Choice_Model, session_id=pk, user_id = request.user.id)
-    '''
+    sesh = get_object_or_404(Choice_Model, session_id=pk, user_id = request.user.id)
+    sesh.delete()
     return HttpResponseRedirect(reverse('list_all_view'))
+
 
 # Show the details of an individual session
 @login_required
@@ -103,38 +90,10 @@ def details_view(request, pk=0):
     except:
         has_choice = False
         same_sesh = False
-    temp_time = ''
-    if sesh.duration == '2 Hours':
-        if sesh.time_slot == '10:15 A.M.':
-            temp_time = '11:30 A.M.'
-        else:
-            temp_time = '2:00 P.M.'
-        try:
-            this_time = get_object_or_404(Choice_Model, time_slot=temp_time, user_id = current_user.id)
-            has_choice = True
-        except:
-            pass
     form = Choice_Form(request.POST or None)
     if form.is_valid():
         if has_choice:
-            old_seshs = Choice_Model.objects.filter(session_id=this_time.session_id, user_id=request.user.id)
-            old_seshs.delete()
-
-        # If it is a 2 Hour Session, then book it for two time slots
-        if sesh.duration == '2 Hours':
-            ext_time = ''
-            if sesh.time_slot == '10:15 A.M.':
-                ext_time = '11:30 A.M.'
-            elif sesh.time_slot == '11:30 A.M.':
-                ext_time = '12:45 P.M.'
-            else:
-                ext_time = '2:00 P.M.'
-            ext_choi = Choice_Model(
-                session_id  = sesh.id,
-                user_id     = current_user.id,
-                time_slot   = ext_time
-            )
-            ext_choi.save()
+            this_time.delete()
         form.save()
         return HttpResponseRedirect(reverse('list_all_view'))
     else:
@@ -152,24 +111,6 @@ def details_view(request, pk=0):
 @login_required
 def home_view(request):
     return render(request, "home.html", {})
-
-
-# Search to capture a search string
-@login_required
-def searchit(request):
-    if request.method == 'POST':
-            form = Search_Form(request.POST) # if post method then form will be validated
-            if form.is_valid():
-                cd = form.cleaned_data
-                num1 = cd.get('search_string')
-                result = cd.get('result')
-                if result:
-                    all_sesh = Session_Model.objects.filter(title__contains=search_string)
-                context = {
-                    'all_sesh': all_sesh
-                }
-                return render(request, 'list_all.html', context)
-
 
 
 @login_required

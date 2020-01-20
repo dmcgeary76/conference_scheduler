@@ -1,74 +1,95 @@
 {% load static %}
+<!--
 {% load bootstrap4 %}                     {# import bootstrap4/bootstrap3 #}
 {% bootstrap_css %}                       {# Embed Bootstrap CSS #}
 {% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 {{ form.media }}                          {# Adds date-picker required JS and CSS #}
+-->
 <!doc-type html>
 <html>
   <head>
-    <link rel="icon" href="{% static 'ico.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'hcdecube.png' %}" type="image/x-icon">
     <title>{% block title %}ECWC Scheduler{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
       {% if user.is_authenticated %}
-        {% if request.user_agent.is_pc %}
-        <nav class="navbar navbar-expand-sm bg-light">
-          <!-- Links -->
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'home_view' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '10:15' %}">List (10:15 AM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '11:30' %}">List (11:30 AM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '12:45' %}">List (12:45 PM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '2:00' %}">List (2:00 PM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-right" href="{% url 'logout' %}">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link navbar-right" href="#">Logged in as {{ user.username }}</a>
-            </li>
-          </ul>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"><img src="{% static 'hcdecube.png' %}" height="50px" /></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home_view' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sessions
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'list_all_view' '0:00' %}">Show All</a>
+          <a class="dropdown-item" href="{% url 'list_all_view' '10:15 A.M.' %}">10:15 AM Sessions</a>
+          <a class="dropdown-item" href="{% url 'list_all_view' '11:30 A.M.' %}">11:30 AM Sessions</a>
+          <a class="dropdown-item" href="{% url 'list_all_view' '12:45 P.M.' %}">12:45 PM Sessions</a>
+          <a class="dropdown-item" href="{% url 'list_all_view' '2:00 P.M.' %}">2:00 PM Sessions</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Logged in as {{ user.username }}</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search_string" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+      <!--
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#"><img src="{% static 'hcdecube.png' %}" height="50px" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home_view' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_all_view' '0:00' %}">List All</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_all_view' '10:15 A.M.' %}">10:15 AM Sessions</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_all_view' '11:30 A.M.' %}">11:30 AM Sessions</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_all_view' '12:45 P.M.' %}">12:45 PM Sessions</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_all_view' '2:00 P.M.' %}">2:00 PM Sessions</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link nav-right" href="{% url 'logout' %}">Logout</a>
+              </li>
+            </ul>
+            <div class="navbar-text">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logged in as {{ user.username }}
+            </div>
+          </div>
         </nav>
-        {% else %}
-        <span style="font-size: 28px;">
-        <nav class="navbar navbar-expand-sm bg-light">
-          <!-- Links -->
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'home_view' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '10:15' %}">List (10:15 AM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '11:30' %}">List (11:30 AM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '12:45' %}">List (12:45 PM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'list_all_view' '2:00' %}">List (2:00 PM)</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-right" href="{% url 'logout' %}">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link navbar-right" href="#">Logged in as {{ user.username }}</a>
-            </li>
-          </ul>
-        </nav>
-        </span>
-        {% endif %}
+        -->
       {% endif %}
     <p>&nbsp;</p>
     <p class="center pgttl">{% block page_title %}{% endblock %}</p>

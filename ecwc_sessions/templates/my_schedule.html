@@ -1,6 +1,8 @@
 {% if request.user_agent.is_pc %}
   <p style="text-align:center; font-weight:bold;">My Schedule</p>
-  <div class="time_label" style="background:blue;">10:15 AM</div>
+  <a class="dropdown-item" href="{% url 'list_all_view' '10:15 A.M.' %}">
+    <div class="time_label" style="background:blue; width:90%">10:15 AM</div>
+  </a>
   <div class="schedule_container" style="background:lightblue;">
     <div class="clearfix">
       <a href="{% url 'details_view' session_times.1015.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1015.title }}</div></a>

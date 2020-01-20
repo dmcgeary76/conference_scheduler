@@ -14,7 +14,7 @@
           {% for sesh in all_sesh %}
           <tr>
             <td><a href="{% url 'details_view' sesh.id %}">{{ sesh.title }}</a></td>
-            <td style="float:left; padding-right:20px;">{{ sesh.time_slot }}</td>
+            <td style="float:left; padding-right:20px; width:100px;">{{ sesh.time_slot }}<br /><b>{{ sesh.duration }}</b></td>
             <td><span style="color:red;">{{ sesh.room_limit|sub:sesh.seats }}</span> seats remaining</td>
           </tr>
       {% endfor %}

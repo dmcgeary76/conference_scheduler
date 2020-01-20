@@ -44,3 +44,11 @@ class Choice_Form(forms.ModelForm):
             'user_id',
             'session_id'
         ]
+
+
+class Search_Form(forms.ModelForm):
+    search_string   = forms.CharField(max_length=100)
+    class Meta:
+        fields = [
+            'search_string'
+        ]

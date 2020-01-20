@@ -6,16 +6,24 @@
     <table class="center">
       <tbody>
         <tr>
-          <td>Session Title: {{ sesh.title }}</td>
-          <td>Presenter: {{ sesh.presenter }}</td>
-          <td>Content Domain: {{ sesh.domain }}</td>
+          <td colspan="3"><h2>{{ sesh.title }}</h2></td>
+        </tr>
+          <td><b>Presenter</b>: {{ sesh.presenter }}</td>
+          <td><b>Strand</b>: {{ sesh.domain }}</td>
+          <td><b>Core Competency</b>: {{ sesh.comp }}</td>
+        <tr>
+          <td colspan="3"><b>Presenter Bio</b>: {{ sesh.p_bio }}</td>
         </tr>
         <tr>
-          <td>Room: {{ sesh.room }}</td>
-          <td>Time: {{ sesh.time_slot }}</td>
-          <td style="color:red;">Seats Remaining: {{ sesh.room_limit|sub:sesh.seats }}</td>
+          <td><b>Room</b>: {{ sesh.room }}</td>
+          <td><b>Co-Presenter</b>: {{ sesh.coop }}</td>
+          <td><b>Time</b>: {{ sesh.time_slot }} ({{ sesh.duration }})</td>
+        </tr>
         <tr>
           <td colspan="3">{{ sesh.description|linebreaks }}</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="color:red;"><b>{{ sesh.room_limit|sub:sesh.seats }}</b> seats remaining.</td>
         </tr>
         <tr>
           <td colspan="3">
@@ -66,12 +74,17 @@
           <td>Presenter: {{ sesh.presenter }}</td>
           <td>Content Domain: {{ sesh.domain }}</td>
         </tr>
+        <tr>
+          <td colspan="3">Presenter Bio: {{ sesh.p_bio }}</td>
+        </tr>
         <tr class="det_mobile">
           <td>Room: {{ sesh.room }}</td>
+          <td>Co-Presenter: {{ sesh.coop }}</td>
           <td>Time: {{ sesh.time_slot }}</td>
-          <td style="color:red;">Seats Remaining: {{ sesh.room_limit|sub:sesh.seats }}</td>
+        </tr>
         <tr class="det_mobile">
-          <td colspan="3">{{ sesh.description|linebreaks }}</td>
+          <td style="color:red;">Seats Remaining: {{ sesh.room_limit|sub:sesh.seats }}</td>
+          <td colspan="2">{{ sesh.description|linebreaks }}</td>
         </tr>
         <tr class="det_mobile">
           <td colspan="3">

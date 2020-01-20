@@ -1,9 +1,10 @@
 from bs4 import BeautifulSoup as bs
 from .models import Session_Model
-import requests
+import requests, csv
 
 # set the target url for processing
 url = 'fr1.html'
+sfile = 'ecwc.csv'
 srt = [[]]
 lrt = [[]]
 selrt = [[]]
@@ -28,7 +29,27 @@ def get_data(url):
                 submit_session(item, item[10])
 
 
-def submit_session(item, time_slot):
+def get_data2():
+    with open(sfile, newline='') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            times = row[16].upper().replace(' ','').replace('A.M.',' A.M.').replace('P.M.',' P.M.')
+            if 'A.M.' in times or 'P.M.' in times:
+                pass
+            else:
+                times = times.replace('10:15','10:15 A.M.').replace('11:30','11:30 A.M.').replace('12:45','12:45 P.M.').replace('2:00','2:00 P.M.')
+            if row[1] != '' and row[0] != 'Timestamp':
+                if '&' in times:
+                    for time_slot in times.split('&'):
+                        submit_session(row, time_slot, '1 Hour')
+                elif '-' in times:
+                    submit_session(row, times.split('-')[0], '2 Hours')
+                else:
+                    submit_session(row, times, '1 Hour')
+
+
+
+def submit_session(item, time_slot, time_span):
     if item[6] == 'SCIENCE ROUND TABLE':
         item[10] = time_slot
         srt.append(item)
@@ -44,24 +65,30 @@ def submit_session(item, time_slot):
         icrt.append(item)
     else:
         try:
-            room_limit = int(item[11])
+            room_limit = int(item[17])
         except:
             room_limit = 1000
-        submission = Session_Model(
-            presenter   = item[0],
-            org         = item[1],
-            email       = item[2].lower(),
-            title       = item[4],
-            description = item[5],
-            domain      = item[6],
-            age_range   = item[7],
-            code        = item[8],
-            room        = item[9],
-            time_slot   = time_slot,
-            room_limit  = room_limit,
-            seats       = 0
-        )
-        submission.save()
+        finally:
+            submission = Session_Model(
+                presenter   = item[1],
+                p_bio       = item[2],
+                coop        = item[4],
+                org         = item[3],
+                email       = item[17].lower(),
+                title       = item[5],
+                description = item[6],
+                domain      = item[7],
+                comp        = item[8],
+                age_range   = item[9],
+                code        = item[0],
+                room        = item[15],
+                time_slot   = time_slot,
+                duration    = time_span,
+                room_limit  = room_limit,
+                seats       = 0
+            )
+            submission.save()
+
 
 
 def meta_session1(sessions):
@@ -141,7 +168,10 @@ def meta_session2(sessions):
     )
     submission.save()
 
+def main():
+    get_data(url)
 
+'''
 def main():
     get_data(url)
     meta_session1(srt)
@@ -149,3 +179,4 @@ def main():
     meta_session2(lrt)
     meta_session2(icrt)
     print(srt)
+'''
