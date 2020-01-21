@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Session_Model, Choice_Model
+from .models import Session_Model, Choice_Model, gSession_Model
 from .forms import Session_Form, Choice_Form
 
 # Custom view to list all sessions - mainly for testing
@@ -136,7 +136,10 @@ def details_view(request, pk=0):
             )
             ext_choi.save()
         form.save()
-        return HttpResponseRedirect(reverse('list_all_view'))
+        if 'Gold' in sesh.title:
+            return HttpResponseRedirect(reverse('gdetails_view'))
+        else:
+            return HttpResponseRedirect(reverse('list_all_view'))
     else:
         context = {
             'sesh': sesh,
@@ -146,6 +149,12 @@ def details_view(request, pk=0):
             'attendees': attendees
         }
         return render(request, 'details.html', context)
+
+
+@login_required
+def gdetails_view(request, pk=0):
+    print('hello')
+    return HttpResponseRedirect(reverse('list_all_view'))
 
 
 # Junk view assignment until I can replace it with a proper menu

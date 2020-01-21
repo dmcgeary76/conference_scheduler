@@ -1,10 +1,11 @@
 from bs4 import BeautifulSoup as bs
-from .models import Session_Model
+from .models import Session_Model, gSession_Model
 import requests, csv
 
 # set the target url for processing
 url = 'fr1.html'
 sfile = 'ecwc.csv'
+gsfile = 'gecwc.csv'
 srt = [[]]
 lrt = [[]]
 selrt = [[]]
@@ -48,8 +49,24 @@ def get_data2():
                     submit_session(row, times, '1 Hour')
 
 
+def gget_data2():
+    with open(gsfile, newline='') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if '10:15' in row[16]:
+                times = ['10:30 A.M.', '11:05 A.M.', '11:35 A.M.', '12:00 P.M.']
+            else:
+                times = ['12:50 P.M.', '1:20 P.M.', '1:50 P.M.', '2:20 P.M.']
+            for time in times:
+                gsubmit_session(row, time, '20 Minutes')
+
 
 def submit_session(item, time_slot, time_span):
+    is_gold = False
+    if 'Gold' in item[5]:
+        is_gold = True
+    else:
+        pass
     if item[6] == 'SCIENCE ROUND TABLE':
         item[10] = time_slot
         srt.append(item)
@@ -82,6 +99,7 @@ def submit_session(item, time_slot, time_span):
                 age_range   = item[9],
                 code        = item[0],
                 room        = item[15],
+                is_gold     = is_gold,
                 time_slot   = time_slot,
                 duration    = time_span,
                 room_limit  = room_limit,
@@ -89,6 +107,28 @@ def submit_session(item, time_slot, time_span):
             )
             submission.save()
 
+
+def gsubmit_session(item, time_slot, time_span):
+    room_limit = 6
+    gsubmission = gSession_Model(
+        presenter   = item[1],
+        p_bio       = item[2],
+        coop        = item[4],
+        org         = item[3],
+        email       = item[17].lower(),
+        title       = item[5],
+        description = item[6],
+        domain      = item[7],
+        comp        = item[8],
+        age_range   = item[9],
+        code        = item[0],
+        room        = item[15],
+        time_slot   = time_slot,
+        duration    = time_span,
+        room_limit  = room_limit,
+        seats       = 0
+    )
+    gsubmission.save()
 
 
 def meta_session1(sessions):
@@ -168,15 +208,7 @@ def meta_session2(sessions):
     )
     submission.save()
 
-def main():
-    get_data(url)
 
-'''
 def main():
-    get_data(url)
-    meta_session1(srt)
-    meta_session1(selrt)
-    meta_session2(lrt)
-    meta_session2(icrt)
-    print(srt)
-'''
+    get_data2()
+    gget_data2()
