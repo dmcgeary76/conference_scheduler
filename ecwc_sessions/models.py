@@ -3,12 +3,12 @@ from django.db import models
 # Create your models here.
 class Session_Model(models.Model):
     presenter       = models.CharField(max_length=120)
-    p_bio           = models.CharField(max_length=1500)
+    p_bio           = models.CharField(max_length=2500)
     coop            = models.CharField(max_length=120)
     org             = models.CharField(max_length=120)
     email           = models.CharField(max_length=120)
     title           = models.CharField(max_length=120)
-    description     = models.CharField(max_length=1500)
+    description     = models.CharField(max_length=2500)
     domain          = models.CharField(max_length=120)
     age_range       = models.CharField(max_length=120)
     comp            = models.CharField(max_length=120)
@@ -23,12 +23,12 @@ class Session_Model(models.Model):
 
 class gSession_Model(models.Model):
     presenter       = models.CharField(max_length=120)
-    p_bio           = models.CharField(max_length=1500)
+    p_bio           = models.CharField(max_length=2500)
     coop            = models.CharField(max_length=120)
     org             = models.CharField(max_length=120)
     email           = models.CharField(max_length=120)
     title           = models.CharField(max_length=120)
-    description     = models.CharField(max_length=1500)
+    description     = models.CharField(max_length=2500)
     domain          = models.CharField(max_length=120)
     age_range       = models.CharField(max_length=120)
     comp            = models.CharField(max_length=120)
