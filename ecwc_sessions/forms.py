@@ -4,30 +4,33 @@ from .models import Session_Model, Choice_Model
 
 class Session_Form(forms.ModelForm):
     presenter       = forms.CharField(max_length=120)
-    org             = forms.CharField(max_length=120)
-    email           = forms.CharField(max_length=120)
+    p_bio           = forms.CharField(max_length=2500, required=False)
+    coop            = forms.CharField(max_length=120, required=False)
+    org             = forms.CharField(max_length=120, required=False)
     title           = forms.CharField(max_length=120)
-    description     = forms.CharField(max_length=500)
-    domain          = forms.CharField(max_length=120)
-    age_range       = forms.CharField(max_length=120)
-    code            = forms.CharField(max_length=120)
+    description     = forms.CharField(max_length=2500)
+    domain          = forms.CharField(max_length=120, required=False)
+    age_range       = forms.CharField(max_length=120, required=False)
+    comp            = forms.CharField(max_length=120, required=False)
     room            = forms.CharField(max_length=120)
     time_slot       = forms.CharField(max_length=120)
+    duration        = forms.CharField(max_length=120)
     room_limit      = forms.IntegerField()
     seats           = forms.IntegerField()
     class Meta:
         model = Session_Model
         fields = [
             'presenter',
+            'p_bio',
+            'coop',
             'org',
-            'email',
             'title',
             'description',
             'domain',
             'age_range',
-            'code',
             'room',
             'time_slot',
+            'duration',
             'room_limit',
             'seats'
         ]

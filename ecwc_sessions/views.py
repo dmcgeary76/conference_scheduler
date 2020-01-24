@@ -91,8 +91,7 @@ def details_view(request, pk=0):
     except:
         attendees = {}
         pass
-    is_owner = request.user.username == sesh.email
-    print(is_owner)
+    is_owner = False
     try:
         this_time = get_object_or_404(Choice_Model, time_slot=sesh.time_slot, user_id = current_user.id)
         has_choice = True
@@ -163,6 +162,19 @@ def home_view(request):
     return render(request, "home.html", {})
 
 
+# Function to delete session instances
+@login_required
+def delete_session_view(request, pk):
+    instance = get_object_or_404(Session_Model, id=pk)
+    instance.delete()
+    try:
+        chois = Choice_Model.objects.filter(session_id=pk)
+        chois.delete()
+    except:
+        pass
+    return HttpResponseRedirect(reverse('list_all_view'))
+
+
 # Search to capture a search string
 @login_required
 def searchit(request):
@@ -192,3 +204,23 @@ def create_session_view(request):
             'form': form
         }
     return render(request, 'create_session.html', context)
+
+
+@login_required
+def edit_session(request, pk=0, template='edit_session.html'):
+    current_user = request.user
+    if pk == 0:
+        pk = request.session['sesh_id']
+    else:
+        request.session['sesh_id'] = pk
+    sesh = get_object_or_404(Session_Model, id=pk)
+    form = Session_Form(request.POST or None, instance=sesh)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('list_all_view'))
+    else:
+        print('not valid')
+        context = {
+            'form': form
+        }
+    return render(request, 'edit_session.html', context)
