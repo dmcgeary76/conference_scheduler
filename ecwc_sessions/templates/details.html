@@ -54,7 +54,8 @@
         You are the presenter for this session!
       {% endif %}
       {% if user.is_staff %}
-        <span style="color:pink;">You are an admin on this site. Don't abuse your awesome powers!</span>
+        <div><a href="{% url 'edit_session_view' sesh.id %}">Edit Session</a></div>
+        <div><a href="{% url 'delete_session_view' sesh.id %}">Delete Session</a></div>
       {% endif %}
     </p>
     <p>
