@@ -207,7 +207,7 @@ def create_session_view(request):
 
 
 @login_required
-def edit_session(request, pk=0, template='edit_session.html'):
+def edit_session_view(request, pk=0, template='edit_session.html'):
     current_user = request.user
     if pk == 0:
         pk = request.session['sesh_id']
