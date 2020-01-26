@@ -86,8 +86,8 @@
   </div>
 </div>
 
-<div style="border: 1px solid black; padding: 10px; margin: 10px; background-color: lightred;">
-  {% if user.is_staff %}
+{% if user.is_staff %}
+  <div style="border: 1px solid black; padding: 10px; margin: 10px; background-color: lightred;">
     <p><b>Admin Controls</b></p>
     <div class="row">
       <div class="col-sm-12">
@@ -107,6 +107,7 @@
         {% endfor %}
       </div>
     </div>
-  {% endif %}
-</div>
+  </div>
+{% endif %}
+
 {% endblock %}
