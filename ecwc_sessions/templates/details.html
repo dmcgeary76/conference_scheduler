@@ -1,131 +1,112 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load mathfilters %}
-{% if request.user_agent.is_pc %}
-  <div class="trg_det">
-    <table class="center">
-      <tbody>
-        <tr>
-          <td colspan="3"><h2>{{ sesh.title }}</h2></td>
-        </tr>
-          <td><b>Presenter</b>: {{ sesh.presenter }}</td>
-          <td><b>Strand</b>: {{ sesh.domain }}</td>
-          <td><b>Core Competency</b>: {{ sesh.comp }}</td>
-        <tr>
-          <td colspan="3"><b>Presenter Bio</b>: {{ sesh.p_bio }}</td>
-        </tr>
-        <tr>
-          <td><b>Room</b>: {{ sesh.room }}</td>
-          <td><b>Co-Presenter</b>: {{ sesh.coop }}</td>
-          <td><b>Time</b>: {{ sesh.time_slot }} ({{ sesh.duration }})</td>
-        </tr>
-        <tr>
-          <td colspan="3">{{ sesh.description|linebreaks }}</td>
-        </tr>
-        <tr>
-          <td colspan="3" style="color:red;"><b>{{ sesh.room_limit|sub:sesh.seats }}</b> seats remaining.</td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <form action='.' method='POST'>{% csrf_token %}
-              <input type="hidden" name="time_slot" value="{{  sesh.time_slot }}"></input>
-              <input type="hidden" name="session_id" value="{{ sesh.id }}"</input>
-              <input type="hidden" name="user_id" value="{{ user.id }}"></input>
-              <a class="nav-link" href="{% url 'list_all_view' sesh.time_slot %}">Back</a>
-              {% if sesh.room_limit|sub:sesh.seats > 0 and not same_sesh %}
-                <input type="submit" value="Register"></input>
-              {% elif sesh.room_limit|sub:sesh.seats == 0 %}
-                <div class="error_msg">There are no seats left in this session.</div>
-              {% elif same_sesh %}
-                <div class="error_msg">You are already registered for this session.</div>
-              {% endif %}
-            </form>
-          </td>
-        </tr>
-        <tr colspan="3">
-          {% if has_choice and sesh.room_limit > 0 and not same_sesh %}
-            <div class="error_msg">You already have a session set for this time.  Registering for this session will drop your previous session from your schedule.</div>
-          {% endif %}
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      {% if is_owner %}
-        You are the presenter for this session!
+
+<div style="border: 1px solid black; padding: 10px; margin: 10px;">
+  <div class="row">
+    <div class="col-sm-12" style="color:blue;">
+      <b>{{ sesh.title }}</b>
+    </div>
+  </div>
+
+  <div class="row">
+  {% if sesh.coop != '' %}
+    <div class="col-sm-6">
+      <b>Presenter: </b>{{ sesh.presenter }}
+    </div>
+    <div class="col-sm-6">
+      <b>Co-Presenter: </b>{{ sesh.coop }}
+    </div>
+  {% else %}
+    <div class="col-sm-12">
+      <b>Presenter: </b>{{ sesh.presenter }}
+    </div>
+  {% endif %}
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <b>Strand: </b>{{ sesh.domain }}
+    </div>
+    <div class="col-sm-8">
+      <b>Core Competency: </b>{{ sesh.comp }}
+    </div>
+  </div>
+
+  {% if sesh.p_bio != '' %}
+  <div class="row">
+    <div class="col-sm-12">
+      <b>Presenter Bio: </b><br />{{ sesh.p_bio }}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-sm-4">
+      <b>Room</b>: {{ sesh.room }}
+    </div>
+    <div class="col-sm-4">
+      <b>Time</b>: {{ sesh.time_slot }} ({{ sesh.duration }})
+    </div>
+    <div class="col-sm-4">
+      <b>Seats Available: </b>{{ sesh.room_limit|sub:sesh.seats }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <b>Description: </b><br />{{ sesh.description|linebreaks }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form action='.' method='POST'>{% csrf_token %}
+        <input type="hidden" name="time_slot" value="{{  sesh.time_slot }}"></input>
+        <input type="hidden" name="session_id" value="{{ sesh.id }}"</input>
+        <input type="hidden" name="user_id" value="{{ user.id }}"></input>
+        <a class="btn btn-primary" href="{% url 'list_all_view' sesh.time_slot %}" role="button">Back</a>
+        {% if sesh.room_limit|sub:sesh.seats > 0 and not same_sesh %}
+          <input class="btn btn-primary" type="submit" value="Register"></input>
+        {% elif sesh.room_limit|sub:sesh.seats == 0 %}
+          <div class="error_msg">There are no seats left in this session.</div>
+        {% elif same_sesh %}
+          <div class="error_msg">You are already registered for this session.</div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      {% if has_choice and sesh.room_limit > 0 and not same_sesh %}
+        <div class="error_msg">You already have a session set for this time.  Registering for this session will drop your previous session from your schedule.</div>
       {% endif %}
-      {% if user.is_staff %}
-        <div><a href="{% url 'edit_session_view' sesh.id %}">Edit Session</a></div>
-        <div><a href="{% url 'delete_session_view' sesh.id %}">Delete Session</a></div>
-      {% endif %}
-    </p>
-    <p>
-      {% if is_owner or user.is_staff %}
+    </div>
+  </div>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 10px; background-color: lightred;">
+  {% if user.is_staff %}
+    <p><b>Admin Controls</b></p>
+    <div class="row">
+      <div class="col-sm-12">
+          <p style="color:red;">Please exercise caution when using these tools. Changes made through the use of the admin controls cannot be undone.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <a class="btn btn-primary" href="{% url 'edit_session_view' sesh.id %}">Edit Session</a>
+        <a class="btn btn-primary" href="{% url 'delete_session_view' sesh.id %}">Delete Session</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
         {% for attendee in attendees %}
           <p>{{ forloop.counter }}. {{ attendee.first_name }} {{ attendee.last_name }} - {{ attendee.email }}</p>
         {% endfor %}
-      {% endif %}
-    </p>
-  </div>
-{% else %}
-  <div class="trg_det">
-    <table class="center">
-      <tbody>
-        <tr class="det_mobile">
-          <td>Session Title: {{ sesh.title }}</td>
-          <td>Presenter: {{ sesh.presenter }}</td>
-          <td>Content Domain: {{ sesh.domain }}</td>
-        </tr>
-        <tr>
-          <td colspan="3">Presenter Bio: {{ sesh.p_bio }}</td>
-        </tr>
-        <tr class="det_mobile">
-          <td>Room: {{ sesh.room }}</td>
-          <td>Co-Presenter: {{ sesh.coop }}</td>
-          <td>Time: {{ sesh.time_slot }}</td>
-        </tr>
-        <tr class="det_mobile">
-          <td style="color:red;">Seats Remaining: {{ sesh.room_limit|sub:sesh.seats }}</td>
-          <td colspan="2">{{ sesh.description|linebreaks }}</td>
-        </tr>
-        <tr class="det_mobile">
-          <td colspan="3">
-            <form action='.' method='POST'>{% csrf_token %}
-              <input type="hidden" name="time_slot" value="{{  sesh.time_slot }}"></input>
-              <input type="hidden" name="session_id" value="{{ sesh.id }}"</input>
-              <input type="hidden" name="user_id" value="{{ user.id }}"></input>
-              <a class="nav-link" href="{% url 'list_all_view' sesh.time_slot %}">Back</a>
-              {% if sesh.room_limit|sub:sesh.seats > 0 and not same_sesh %}
-                <input type="submit" value="Register"></input>
-              {% elif sesh.room_limit|sub:sesh.seats == 0 %}
-                <div class="error_msg">There are no seats left in this session.</div>
-              {% elif same_sesh %}
-                <div class="error_msg">You are already registered for this session.</div>
-              {% endif %}
-            </form>
-          </td>
-        </tr>
-        <tr colspan="3" class="det_mobile">
-          {% if has_choice and sesh.room_limit > 0 and not same_sesh %}
-            <div class="error_msg" style="font-size:28px;">You already have a session set for this time.  Registering for this session will drop your previous session from your schedule.</div>
-          {% endif %}
-        </tr>
-      </tbody>
-    </table>
-    <p class="det_mobile">
-      {% if is_owner %}
-        You are the presenter for this session!
-      {% endif %}
-      {% if user.is_staff %}
-        <span  class="det_mobile" style="color:pink;">You are an admin on this site. Don't abuse your awesome powers!</span>
-      {% endif %}
-    </p>
-    <p class="det_mobile">
-      {% if is_owner or user.is_staff %}
-        {% for attendee in attendees %}
-          <p class="det_mobile">{{ forloop.counter }}. {{ attendee.first_name }} {{ attendee.last_name }} - {{ attendee.email }}</p>
-        {% endfor %}
-      {% endif %}
-    </p>
-  </div>
-{% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
 {% endblock %}

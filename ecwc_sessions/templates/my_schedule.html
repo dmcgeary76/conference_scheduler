@@ -1,103 +1,61 @@
-{% if request.user_agent.is_pc %}
-  <p style="text-align:center; font-weight:bold;">My Schedule</p>
-  <a class="dropdown-item" href="{% url 'list_all_view' '10:15 A.M.' %}">
-    <div class="time_label" style="background:blue; width:90%">10:15 AM</div>
-  </a>
-  <div class="schedule_container" style="background:lightblue;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.1015.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1015.title }}</div></a>
-      <div class="session_room">{{ session_times.1015.room }}</div>
-    </div>
+<p style="text-align:center; font-weight:bold;">My Schedule</p>
+
+<a class="dropdown-item" href="{% url 'list_all_view' '10:15 A.M.' %}">
+  <div class="time_label" style="background:blue; width:90%">10:15 AM</div>
+</a>
+<div class="schedule_container" style="background:lightblue;">
+  <div class="clearfix">
+    <a href="{% url 'details_view' session_times.1015.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1015.title }}</div></a>
+    <div class="session_room">{{ session_times.1015.room }}</div>
   </div>
-  <p class="schedule_container">
-    {% if session_times.1015.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.1015.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-  <div class="time_label" style="background:orange;">11:30 AM</div>
-  <div class="schedule_container" style="background:lemonchiffon;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.1130.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1130.title }}</div></a>
-      <div class="session_room">{{ session_times.1130.room }}</div>
-    </div>
+</div>
+<p class="schedule_container">
+  {% if session_times.1015.session_id != 0 %}
+    <a href="{% url 'delete_choice_view' session_times.1015.session_id %}">Remove from Schedule</a>
+  {% endif %}
+</p>
+
+<a class="dropdown-item" href="{% url 'list_all_view' '11:30 A.M.' %}">
+  <div class="time_label" style="background:blue; width:90%">11:30 AM</div>
+</a>
+<div class="schedule_container" style="background:lightblue;">
+  <div class="clearfix">
+    <a href="{% url 'details_view' session_times.1130.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1130.title }}</div></a>
+    <div class="session_room">{{ session_times.1130.room }}</div>
   </div>
-  <p class="schedule_container">
-    {% if session_times.1130.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.1130.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-  <div class="time_label" style="background:green;">12:45 PM</div>
-  <div class="schedule_container" style="background:lightgreen;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.1245.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1245.title }}</a></div>
-      <div class="session_room">{{ session_times.1245.room }}</div>
-    </div>
+</div>
+<p class="schedule_container">
+  {% if session_times.1130.session_id != 0 %}
+    <a href="{% url 'delete_choice_view' session_times.1130.session_id %}">Remove from Schedule</a>
+  {% endif %}
+</p>
+
+<a class="dropdown-item" href="{% url 'list_all_view' '12:45 P.M.' %}">
+  <div class="time_label" style="background:blue; width:90%">12:45 PM</div>
+</a>
+<div class="schedule_container" style="background:lightblue;">
+  <div class="clearfix">
+    <a href="{% url 'details_view' session_times.1245.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1245.title }}</div></a>
+    <div class="session_room">{{ session_times.1245.room }}</div>
   </div>
-  <p class="schedule_container">
-    {% if session_times.1245.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.1245.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-  <div class="time_label" style="background:purple;">2:00 PM</div>
-  <div class="schedule_container" style="background:plum;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.200.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.200.title }}</div></a>
-      <div class="session_room">{{ session_times.200.room }}</div>
-    </div>
+</div>
+<p class="schedule_container">
+  {% if session_times.1245.session_id != 0 %}
+    <a href="{% url 'delete_choice_view' session_times.1245.session_id %}">Remove from Schedule</a>
+  {% endif %}
+</p>
+
+<a class="dropdown-item" href="{% url 'list_all_view' '2:00 P.M.' %}">
+  <div class="time_label" style="background:blue; width:90%">2:00 PM</div>
+</a>
+<div class="schedule_container" style="background:lightblue;">
+  <div class="clearfix">
+    <a href="{% url 'details_view' session_times.200.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.200.title }}</div></a>
+    <div class="session_room">{{ session_times.200.room }}</div>
   </div>
-  <p class="schedule_container">
-    {% if session_times.200.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.200.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-{% else %}
-  <p style="text-align:center; font-weight:bold; font-size:28px;">My Schedule</p>
-  <div class="time_label_mobile" style="background:blue;">10:15 AM</div>
-  <div class="schedule_container_mobile" style="background:lightblue;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.1015.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1015.title }}</div></a>
-      <div class="session_room">{{ session_times.1015.room }}</div>
-    </div>
-  </div>
-  <p class="schedule_container_mobile">
-    {% if session_times.1015.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.1015.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-  <div class="time_label_mobile" style="background:orange;">11:30 AM</div>
-  <div class="schedule_container_mobile" style="background:lemonchiffon;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.1130.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1130.title }}</div></a>
-      <div class="session_room">{{ session_times.1130.room }}</div>
-    </div>
-  </div>
-  <p class="schedule_container_mobile">
-    {% if session_times.1130.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.1130.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-  <div class="time_label_mobile" style="background:green;">12:45 PM</div>
-  <div class="schedule_container_mobile" style="background:lightgreen;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.1245.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.1245.title }}</a></div>
-      <div class="session_room">{{ session_times.1245.room }}</div>
-    </div>
-  </div>
-  <p class="schedule_container_mobile">
-    {% if session_times.1245.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.1245.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-  <div class="time_label_mobile" style="background:purple;">2:00 PM</div>
-  <div class="schedule_container_mobile" style="background:plum;">
-    <div class="clearfix">
-      <a href="{% url 'details_view' session_times.200.session_id %}" style="color:black; text-decoration: underline;"><div class="session_title">{{ session_times.200.title }}</div></a>
-      <div class="session_room">{{ session_times.200.room }}</div>
-    </div>
-  </div>
-  <p class="schedule_container_mobile">
-    {% if session_times.200.session_id != 0 %}
-      <a href="{% url 'delete_choice_view' session_times.200.session_id %}">Remove from Schedule</a>
-    {% endif %}
-  </p>
-{% endif %}
+</div>
+<p class="schedule_container">
+  {% if session_times.200.session_id != 0 %}
+    <a href="{% url 'delete_choice_view' session_times.200.session_id %}">Remove from Schedule</a>
+  {% endif %}
+</p>
