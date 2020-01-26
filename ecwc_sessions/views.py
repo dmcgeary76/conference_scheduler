@@ -12,7 +12,7 @@ def list_all_view(request, ts=0):
     # update the number of seats for each sessions
     seshs = Session_Model.objects.all()
     for sesh in seshs:
-        sesh.seats = Choice_Model.objects.filter(session_id=sesh.id).count()
+        sesh.seats = Choice_Model.objects.filter(session_id=sesh.id, time_slot=sesh.time_slot).count()
         sesh.save()
     session_times = {
         '1015': {'title': '', 'room': '', 'session_id': 0},
@@ -80,7 +80,7 @@ def details_view(request, pk=0):
     sesh = Session_Model.objects.get(id=pk)
     print(sesh.id)
     try:
-        registrants = Choice_Model.objects.all().filter(session_id=sesh.id)
+        registrants = Choice_Model.objects.all().filter(session_id=sesh.id, time_slot=sesh.time_slot)
         attendees = []
         for registrant in registrants:
             user = User.objects.get(id = registrant.user_id)
