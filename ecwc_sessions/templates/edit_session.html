@@ -1,9 +1,72 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap4 %}                     {# import bootstrap4/bootstrap3 #}
 {% block content %}
-<form action='.' method='POST'>{% csrf_token %}
-  {{ form.as_p }}
-  <input type='submit' value='Save Changes' />
-</form>
-{{ form.errors }}
+<div style="border: 1px solid black; margin:10px; padding:10px;">
+  <form action='.' method='POST'>{% csrf_token %}
+
+    <div class="row">
+      <div class="col-sm-12">
+        {% bootstrap_field form.title %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        {% bootstrap_field form.presenter %}
+      </div>
+      <div class="col-sm-4">
+        {% bootstrap_field form.coop %}
+      </div>
+      <div class="col-sm-4">
+        {% bootstrap_field form.org %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        {% bootstrap_field form.p_bio %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-9">
+        {% bootstrap_field form.description %}
+      </div>
+      <div class="col-sm-3">
+        {% bootstrap_field form.room %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        {% bootstrap_field form.domain %}
+      </div>
+      <div class="col-sm-4">
+        {% bootstrap_field form.age_range %}
+      </div>
+      <div class="col-sm-4">
+        {% bootstrap_field form.comp %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        {% bootstrap_field form.time_slot %}
+      </div>
+      <div class="col-sm-3">
+        {% bootstrap_field form.duration %}
+      </div>
+      <div class="col-sm-3">
+        {% bootstrap_field form.room_limit %}
+      </div>
+      <div class="col-sm-3">
+        {% bootstrap_field form.seats %}
+      </div>
+    </div>
+    <a class="btn btn-primary" href="{% url 'details_view' sesh.id %}" role="button">Back</a>
+    <input class="btn btn-primary" type='submit' value='Save Changes' />
+  </form>
+  {{ form.errors }}
+</div>
 {% endblock %}
