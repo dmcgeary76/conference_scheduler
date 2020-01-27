@@ -221,6 +221,7 @@ def edit_session_view(request, pk=0, template='edit_session.html'):
     else:
         print('not valid')
         context = {
-            'form': form
+            'form': form,
+            'sesh': sesh
         }
     return render(request, 'edit_session.html', context)
