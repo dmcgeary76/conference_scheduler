@@ -135,10 +135,7 @@ def details_view(request, pk=0):
             )
             ext_choi.save()
         form.save()
-        if 'Gold' in sesh.title:
-            return HttpResponseRedirect(reverse('gdetails_view'))
-        else:
-            return HttpResponseRedirect(reverse('list_all_view'))
+        return HttpResponseRedirect(reverse('list_all_view'))
     else:
         context = {
             'sesh': sesh,
