@@ -6,7 +6,7 @@
   <div id="core_login">
     <img class="logo" src="{% static '2020_banner_mini.jpg' %}" />
     <form method="post">{% csrf_token %}
-      <div><b>Email Address:</b> {{ form.username }}</div>
+      <div><b>Username:</b> {{ form.username }}</div>
       <input type="hidden" name="password" value="ecwc2019!"</input>
       <div style="clear:both;">&nbsp;</div>
       <input type="submit" value="login"></input>
