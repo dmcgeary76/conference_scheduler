@@ -173,8 +173,9 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
+        <br /><b>Attendee List:</b>
         {% for attendee in attendees %}
-          <p>{{ forloop.counter }}. {{ attendee.first_name }} {{ attendee.last_name }} - {{ attendee.email }}</p>
+          <p>{{ forloop.counter }}. {{ attendee.first_name }} {{ attendee.last_name }} - {{ attendee.email }} </p>
         {% endfor %}
       </div>
     </div>
