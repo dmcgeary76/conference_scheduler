@@ -59,6 +59,47 @@
     </div>
   </div>
 
+  {% if 'Gold' in sesh.title %}
+    <div class="row">
+      <div class="col-sm-12">
+        Enrolling in a Gold Mine Session Block allows to you participate in <b>four</b> of the amazing sessions listed below:
+      </div>
+    </div>
+    <div style="background-color: #fbf1b6; padding:10px; margin:10px;">
+    {% if 'Morning' in sesh.title %}
+      {% for gsesh in gseshm %}
+      <div class="row">
+        <div class="col-sm-8">
+          <b>Title: </b>{{ gsesh.title }}
+        </div>
+        <div class="col-sm-4">
+          <b>Room: </b>{{ gsesh.room }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <b>Presenter: </b>{{ gsesh.presenter }}
+        </div>
+        {% if gsesh.coop != '' %}
+        <div class="col-sm-4">
+          <b>Co-Prsenter: </b>{{ gsesh.coop }}
+        </div>
+        {% endif %}
+        <div class="col-sm-4">
+          <b>Organization: </b>{{ gsesh.org }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <b>Description: </b>{{ gsesh.description }}
+        </div>
+      </div>
+      <hr>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endif %}
+
   <div class="row">
     <div class="col-sm-12">
       <form action='.' method='POST'>{% csrf_token %}
