@@ -78,7 +78,8 @@ def details_view(request, pk=0):
     else:
         request.session['sesh_id'] = pk
     sesh = Session_Model.objects.get(id=pk)
-    print(sesh.id)
+    gseshm = gSession_Model.objects.get(time_slot='10:30 A.M.')
+    gsesha = gSession_Model.objects.get(time_slot='12:50 P.M.')
     try:
         registrants = Choice_Model.objects.all().filter(session_id=sesh.id, time_slot=sesh.time_slot)
         attendees = []
@@ -142,7 +143,9 @@ def details_view(request, pk=0):
             'has_choice': has_choice,
             'same_sesh': same_sesh,
             'is_owner': is_owner,
-            'attendees': attendees
+            'attendees': attendees,
+            'gseshm': gseshm,
+            'gsesha': gsesha
         }
         return render(request, 'details.html', context)
 
