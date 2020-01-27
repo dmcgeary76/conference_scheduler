@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load mathfilters %}
 {% block content %}
 <div class="row">
@@ -8,7 +9,11 @@
   <div class="col-sm-7">
     {% for sesh in all_sesh %}
     <p style="padding: 10px; margin: 10px; border: 1px solid black;">
-      <b>Title: </b><a href="{% url 'details_view' sesh.id %}">{{ sesh.title }}</a><br />
+      <b>Title: </b>
+      {% if 'Gold' in sesh.title %}
+        <img src="{% static 'gold_mine.png' %}" height="25px" />
+      {% endif %}
+      <a href="{% url 'details_view' sesh.id %}">{{ sesh.title }}</a><br />
       <b>Time: </b>{{ sesh.time_slot }} (<b>{{ sesh.duration }}</b>)<br />
       <b>Seats: </b>{{ sesh.room_limit|sub:sesh.seats }} remaining
     </p>
