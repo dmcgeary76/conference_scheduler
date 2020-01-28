@@ -4,7 +4,7 @@
 
 <div style="border: 1px solid black; padding: 10px; margin: 10px;">
   <div class="row">
-    <div class="col-sm-12" style="color:blue;">
+    <div class="col-sm-12" style="color:#1b487f;">
       <b>{{ sesh.title }}</b>
     </div>
   </div>
@@ -49,7 +49,7 @@
       <b>Time</b>: {{ sesh.time_slot }} ({{ sesh.duration }})
     </div>
     <div class="col-sm-4">
-      <b>Seats Available: </b>{{ sesh.room_limit|sub:sesh.seats }}
+      <b>Seats Available: <span style="color:#a02e2d;">{{ sesh.room_limit|sub:sesh.seats }}</span></b> (Capicity: {{ sesh.room_limit }})
     </div>
   </div>
 
